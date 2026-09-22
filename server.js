@@ -1,6 +1,7 @@
 // imports
 const express = require("express") //importing express package
 const app = express() // creates a express application
+app.set("view engine","ejs");
 const dotenv = require("dotenv").config() //this allows me to use my .env values in this file
 const morgan = require('morgan')
 const session = require('express-session');

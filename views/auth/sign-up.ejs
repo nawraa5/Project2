@@ -4,21 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
     <%- include('../partials/navbar') %>
     <h1>Create a new account!</h1>
+    
     <form action="/auth/sign-up" method="post">
+      <div class="form-group">
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+      <input type="text" name="username" id="username" placeholder="Enter your username like" required />
+      </div>
       <br><br>
+      <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
+      <input type="password" name="password" id="password" placeholder="Must include a number and a letter" required/>
+      </div>
       <br><br>
+      <div class="form-group">
       <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
+      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="ConfirmP assword" required/>
+      </div>
       <br><br>
+      <div class="form-group">
+      <label for="role">Your role :</label>
+      <label>
+      <input type="radio" name="role" value="customer" required/>Customer
+      </label>
+      <label>
+        <input type="radio" name="role" value="owner" required />Owner
+      </label>
+      </div>
+      <br><br>
+
       <button type="submit">Sign up</button>
+     
+
     </form>
   </body>
 </html>
