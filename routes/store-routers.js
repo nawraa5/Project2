@@ -1,60 +1,107 @@
 const router = require("express").Router();
-const Stores = require('../models/store');
+const Store= require('../models/store');
 const isSignedIn = require('../middleware/is-signed-in');
 
 
+// crate store
 
 router.post("/",isSignedIn ,async (req, res) => {
-    const createdstore = await Store.create({
+    const createdStore = await Store.create({
         name: req.body.name,
         description: req.body.description,
         image: req.body.image,
         category: req.body.category,
         owner: req.session.user._id
-    })
+    });
     res.redirect("/stores")
-})
+});
 
+// read all stores
 
 router.get('/', async (req, res) => {
-    const stores = await store.find({ isDeleted: false })
-    res.render('store.ejs', { stores})
-})
+    const stores = await Store.find({ 
+        isDeleted: false 
 
-router.get('/:storesId', async (req, res) => {
-    const foundStore = await store.findOne({ _id: req.params.storesId, isDeleted: false }).populate('owner')
-    res.render('stores', { stores: foundStore })
-})
+    });
+    res.render('stores.ejs', { stores});
+});
 
-router.delete('/:storesId', isSignedIn, async (req, res) => {
-    const foundstore = await store.findById(req.params.storesId)
-    if (!foundstore) {
-        return res.send('Store not found')
+
+//read one store
+
+router.get('/:storeId', async (req, res) => {
+    const foundStore = await Store.findOne({ 
+        _id: req.params.storeId,
+        isDeleted: false
+     }).populate("owner");
+
+
+    if (!foundStore) {
+        return res.send('Store not found');
     }
+
+    res.render("store-details.ejs", {
+        store:foundStore
+    });
+});
     
 
-    const deletedstore = await store.findByIdAndUpdate(req.params.storesId, { isDeleted: true })
+router.get('/:storeId/edit',isSignedIn, async (req, res) => {
+    const foundStore = await Store.findOne({
+        _id: req.params.storeId,
+        isDeleted:false
+    });
+
+
+    if (!foundStore) {
+        return res.send('Store not found');
+    }
+
+    res.render("edit-store.ejs",{
+        store:foundStore
+    });
+
+});
    
+//update store
 
-   res.redirect('/stores')
+router.put('/:storeId',isSignedIn, async (req, res) => {
+    const {
+         name, 
+         description,
+          image,
+           category
+             } = req.body;
 
-})
-
-router.get('/:storesId/edit', async (req, res) => {
-    const foundstores = await store.findById(req.params.storesId)
-    res.render('stores', { stores: foundstores })
-})
-
-router.put('/:storesId', async (req, res) => {
-    const { name, description, image, category, owner } = req.body
-    const updatedstore = await store.findByIdAndUpdate(req.params.storeId, {
+   await Store.findByIdAndUpdate(req.params.storeId, {
         name,
         description,
         image,
         category,
-        owner
-    })
+       
+    });
+
     res.redirect('/stores')
-})
+});
+
+
+
+// Delete store 
+
+router.delete("/:storeId",isSignedIn,async(req,res)=>{
+    const foundStore=await Store.findById(req.params.storeId);
+
+    if(!foundStore){
+        return res.send("Store not found");
+    }
+
+    await Store.findByIdAndUpdate(req.params.storeId,{
+        isDeleted:true
+    });
+
+    res.redirect("/stores")
+
+
+});
 
 module.exports = router;
