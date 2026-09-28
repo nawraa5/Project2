@@ -12,4 +12,51 @@
 <body>
     <%- include('./partials/navbar') %>
 
+        <section class="page-header">
+            <h1>Cake Stores</h1>
+            <p> Where every bite tells a story of love and joy.</p>
+        </section>
+
+        <section class="stores-container">
+            <% if(stores && stores.length >0){ %>
+                <% stores.forEach(store= =>{ %>
+                    <div class="store-card">
+
+                    <img
+                    src="/images/<%=store.image %>"
+                    alt="<%=store.name%>"
+                    >
+
+                    <div class="store-card-content">
+                        <h2>
+                            <%=store.name %>
+                            </h2>
+
+                            <p>
+                                <%=store.description %>
+                            </p>
+
+                            <a 
+                            href="/stores/<%=store._id%>"
+                            class="btn">
+                            View Store
+                        </a>
+                        </div>
+                    </div>
+                    <% }) %>
+
+                    <%} else{%>
+                        <p class="empty-message">
+                            No cake stores available yet.
+                        </p>
+
+                        <% } %>
+        </section>
+    </main>
+    <%- include("partials/footer") %>
+
+</body>
+</html>
+
+            
     

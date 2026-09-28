@@ -10,13 +10,13 @@
 
 
 
-      <% if (typeof curentUser !== 'undefined'&& curentUser) {
-        
-      } %> if(curentUser.role === "owner"){ %>
+      <% if (typeof curentUser !== 'undefined'&& curentUser) { %>
+        <%if(curentUser.role === "owner"){ %>
         <a href="/orders">Orders</a>
+        <% } %>
 
         <form action="/auth/logout" method="POST" class="logout-form">
-          < button type="submit">Logout</button>
+          <button type="submit">Logout</button>
           </form>
 
 

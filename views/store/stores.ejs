@@ -3,9 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Moment-Stores</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <%- include("partials/navbar") %>
+    <main>
+        <section class="page-header">
+        <h1>Stores</h1>
+        <p>
+            Explore all stores available on MOMENT .
+        </p>
+        </section>
+
+            <section class="stores-container">
+            <% if(stores && stores.length >0){ %>
+                <% stores.forEach(store= =>{ %>
+                    <div class="store-card">
+
+                    <img
+                    src="/images/<%=store.image %>"
+                    alt="<%=store.name%>"
+                    >
+                    <div class="store-card-content">
+                        <span class="category">
+                        <%= store.category %>
+                        </span>
+
+                        <h2>
+                            <%= store.name %>
+                        </h2>
+
+                        <p>
+                            <%= store.description%>
+                        </p>
+
+
+                        <a 
+                            href="/stores/<%=store._id%>"
+                            class="btn">
+                            View Store
+                        </a>
+                        </div>
+                    </div>
+                </div>
+
+                    <% }) %>
+
+                    <%} else{%>
+                        <p class="empty-message">
+                            No stores found.
+                        </p>
+
+                        <% } %>
     
+        </section>
+    </main>
+    <%- include("partials/footer")%>
 </body>
 </html>
