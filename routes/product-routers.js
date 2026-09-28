@@ -1,60 +1,105 @@
 const router = require("express").Router()
-const cake = require('../models/cake')
+const Product = require('../models/product')
 const isSignedIn = require('../middleware/is-signed-in')
 
 
 
-router.post('/', async (req, res) => {
-    const createdstore = await store.create({
-        name: req.body.name,
-        description: req.body.description,
-        image: req.body.image,
-        category: req.body.category,
-        owner: req.session.user._id
-    })
-    res.redirect('/stores')
-})
+//create Product
+
+router.post("/",isSignedIn, async (req, res) => {
+    const createdProduct=await Product.create({
+       name:req.body.name,
+       description:req.body.description,
+       price:req.body.price,
+       image:req.body.image,
+       store:req.body.store
+    });
+    res.redirect("/products");
+});
+
+//read all products
+
+router.get("/",async(req,res)=>{
+    const products=await Product.find().populate("store");
+
+    res.render("products.ejs",{
+        products
+    });
+});
 
 
-router.get('/', async (req, res) => {
-    const cakes = await cake.find({ isDeleted: false })
-    res.render('cakes.ejs', {cakes})
-})
+//read one product
 
-router.get('/:cakesId', async (req, res) => {
-    const foundCake = await cake.findOne({ _id: req.params.cakesId, isDeleted: false }).populate('owner')
-    res.render('cakes', { cakes: foundCake })
-})
+router.get('/:productId', async (req, res) => {
+    const foundProduct= await Product.findById(
+       req.params.productId).populate("store")
 
-router.delete('/:cakesId', isSignedIn, async (req, res) => {
-    const foundcake = await cake.findById(req.params.cakesId)
-    if (!foundcake) {
-        return res.send('Store not found')
-    }
+       if(!foundProduct){
+        return res.send("Product not found")
+       }
+
+       res.render("product-details.ejs",{
+        product:foundProduct
+       });
     
+});
 
-    const deletedcake = await cake.findByIdAndUpdate(req.params.cakesId, { isDeleted: true })
+//edit product
+
+router.get('/:productId/edit',isSignedIn, async (req, res) => {
+    const foundProduct = await Product.findById(req.params.productId
+       
+    );
+
+
+    if (!foundProduct) {
+        return res.send('Product not found');
+    }
+
+    res.render("edit-product.ejs",{
+        product:foundProduct
+    });
+
+});
    
+//update product
 
-   res.redirect('/cakes')
+router.put('/:productId',isSignedIn, async (req, res) => {
+    const {
+         name, 
+         description,
+         price,
+          image,
+        store
+             } = req.body;
 
-})
-
-router.get('/:cakesId/edit', async (req, res) => {
-    const foundcakes = await cake.findById(req.params.cakesId)
-    res.render('cakes', { cakes: foundcakes })
-})
-
-router.put('/:cakesId', async (req, res) => {
-    const { name, description, image, category, owner } = req.body
-    const updatedstore = await cake.findByIdAndUpdate(req.params.cakesId, {
+   await Product.findByIdAndUpdate(req.params.productId, {
         name,
         description,
+        price,
         image,
-        category,
-        owner
-    })
-    res.redirect('/cakess')
-})
+        store
+       
+    });
+
+    res.redirect('/products')
+});
+
+
+
+// Delete product
+
+router.delete("/:productId",isSignedIn,async(req,res)=>{
+    const foundProduct=await Product.findById(req.params.productId);
+
+    if(!foundProduct){
+        return res.send("Product not found");
+    }
+
+    await Product.findByIdAndDelete(req.params.productId);
+       
+    res.redirect("/products");
+    });
 
 module.exports = router;
+

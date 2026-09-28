@@ -45,7 +45,7 @@ router.get('/:storeId', async (req, res) => {
     });
 });
     
-
+//edit store
 router.get('/:storeId/edit',isSignedIn, async (req, res) => {
     const foundStore = await Store.findOne({
         _id: req.params.storeId,
