@@ -8,12 +8,16 @@
   </head>
   <body>
     <%- include('../partials/navbar') %>
-    <h1>Create a new account!</h1>
+
+    <div class="register-container">
+    <h2>Create a new account!</h2>
+    
     
     <form action="/auth/sign-up" method="post">
+
       <div class="form-group">
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" placeholder="Enter your username like" required />
+      <input type="text" name="username" id="username" placeholder="Enter your username " required />
       </div>
       <br><br>
       <div class="form-group">
@@ -23,7 +27,7 @@
       <br><br>
       <div class="form-group">
       <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="ConfirmP assword" required/>
+      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required/>
       </div>
       <br><br>
       <div class="form-group">
@@ -31,15 +35,19 @@
       <label>
       <input type="radio" name="role" value="customer" required/>Customer
       </label>
+      <div class="form-group">
       <label>
         <input type="radio" name="role" value="owner" required />Owner
       </label>
-      </div>
+    </div>
       <br><br>
-
-      <button type="submit">Sign up</button>
+      
+      <button type="submit" class="register-btn">Sign up</button>
      
 
-    </form>
+     </form>
+     </div>
+
+    
   </body>
 </html>

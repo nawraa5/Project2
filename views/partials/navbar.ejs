@@ -1,8 +1,10 @@
-<nav>
-    
-    <a href="/">Homepage</a>
+<nav class="navbar">
+  <div class="nav-brand">
+    <a href="/">Moment</a>
     <% if (user){ %>
     <a href="/auth/sign-out">Logout</a>
+    <a href="/view/flowers">Flowers</a>
+    <a href="/view/cakes">cakes</a>
 
     <% } else{ %>
     <a href="/auth/sign-up">Sign up</a>
