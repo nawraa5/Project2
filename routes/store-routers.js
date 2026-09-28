@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         isDeleted: false 
 
     });
-    res.render('stores.ejs', { stores});
+    res.render('stores', { stores});
 });
 
 
@@ -57,7 +57,7 @@ router.get('/:storeId/edit',isSignedIn, async (req, res) => {
         return res.send('Store not found');
     }
 
-    res.render("edit-store.ejs",{
+    res.render("edit-store",{
         store:foundStore
     });
 

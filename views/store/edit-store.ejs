@@ -3,9 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edit-store</title>
+    <title>Edit Store - MOMENT</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
+     <%- include("partials/navbar") %>
+
+     <main>
+        <section class="form-section">
+            <h1>Edit store</h1>
+
+            <form 
+            action="/stores/<%=store._id%>>?_method=PUT"
+            method="POST"
+            class="form">
+        </form>
+
+
+        <label for="description">
+            Description
+        </label>
+
+        <textarea
+        id="description"
+        name="description"
+        required>
+        <%= store.description%>
+    </textarea>
+
+    <label for="image">
+        Image
+    </label>
+
+
+    <input
+    type="text"
+    id="image"
+    name="image"
+    value="<%=store.image %>"
+    required
+    >
+
+    <label for="category">
+        Category
+    </label>
+
+
+    <select
+    id="category"
+    name="category"
+    required
+    >
+   
+
+    <option
+    value="flowers"
+    <%= store.category === "flowers" ? "selected":"" %>
+    >
+    Flowers
+</option>
+
+
+<option
+    value="cakes"
+    <%= store.category === "cakes" ? "selected":"" %>
+    >
+    cakes
+</option>
+    </select>
+
+    <button
+    type="submit"
+    class="btn"
+    >
+    Update Store
+</button>
+
+        </section>
+     </main>
+
+
+     <%- include("partials/footer") %>
     
 </body>
 </html>

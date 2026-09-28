@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%=store.name %> - MOMENT</title>
     <link rel="stylesheet" href="/css/style.css">
-</head>
+    </head>
 <body>
     <%- include("partials/navbar") %>
 
@@ -45,7 +45,7 @@
                     <% products.forEach(product => { %>
                         <div class="product-card">
                             <img
-                            src="images/<%= product.image %>"
+                            src="/images/<%= product.image %>"
                             alt="<%= product.name %>">
 
                             <div class="product-card-content">
@@ -61,7 +61,7 @@
                                 </p>
 
                                 <a
-                                href="/products<% product._id %>"
+                                href="/products<%= product._id %>"
                                 class="btn">
                             View Product</a>
                             </div>
@@ -71,7 +71,7 @@
 
 
                         <% }else{%>
-                            
+
                             <p class="empty-message">
                                 This store has no products yet
                             </p>
@@ -83,7 +83,7 @@
         </section>
 
         <% if(
-            typeof curentUser !=="undefiend" &&
+            typeof currentUser !=="undefined" &&
             curentUser && store.owner&&
             curentUser._id.toString()=== store.owner._id.toString()
 
