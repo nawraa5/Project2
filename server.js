@@ -17,7 +17,10 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 // routes Imports
 const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
-const storesController=require("./routes/cake.js");
+const storeController=require("./routes/store-routers.js");
+const productController=require("./routes/product-routers.js");
+const orderController=require("./routes/orders-routers.js");
+
 
 // Middleware
 app.use(express.static('public')) // my app will serve all static files from public folder
@@ -55,7 +58,9 @@ app.use(passUserToView)
 // Routes go here
 app.use('/auth',authController)
 app.use('/',indexController)
-app.use('/stores',storesController)
+app.use('/store',storeController)
+app.use('/product',productController)
+app.use('/order',orderController)
 
 
 
