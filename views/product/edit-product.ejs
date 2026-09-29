@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - MOMENT</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <%- include('./partials/navbar') %>
+
+    <main>
+        <section class="form-section">
+            <h1>
+                Edit Product
+            </h1>
+
+            <form
+            action="/products/<%= product._id %>?_method=PUT"
+            method="POST"
+            class="form">
+
+
+            <label for="name">
+                Products Name
+
+            </label>
+
+
+            <input 
+            type="text"
+            id="name"
+            name="name"
+            value="<%= product.name %>"
+            required >
+
+
+            <label for="description">
+                Description
+            </label>
+
+
+            <textarea
+            id="description"
+            name="description"
+            required><%= product.description %></textarea>
+           
+
+            <label for="price">
+                Price(BD)
+            </label>
+
+            <input
+            type="number"
+            id="price"
+            name="price"
+            value="<%= product.price %>"
+            step="0.001"
+            min="0"
+            required
+
+        >
+        <label for="image">
+            Image
+        </label>
+
+        <input
+        type="text"
+        id="image"
+        name="image"
+        value="<%= product.image %>"
+        required
+    >
+
+    <label for="store">
+        Store
+    </label>
+
+    <select
+    id="store"
+    name="store"
+    required
+    >
+
+    <% store.forEach(store => { %>
+        <option
+        value="<%= store._id %>"
+        <%= product.store &&
+         product.store._id.toString() === 
+         store._id.toString()
+         ?"selected"
+         :"" %>
+
+         >
+         <%= store.name %>
+    </option>
+    <%})  %>
+</select>
+
+
+<button
+type="submit"
+class="btn">
+
+Update Product
+</button>
+        </form>
+
+        </section>
+    </main>
+    
+    <%- include("partials/footer")%>
+</body>
+</html>
