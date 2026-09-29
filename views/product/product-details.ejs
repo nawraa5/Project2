@@ -48,7 +48,7 @@
             currentUser && 
             product.store&&
             product.store.owner&&
-            curentUser._id.toString()=== product.store.owner.toString()
+            currentUser._id.toString()=== product.store.owner.toString()
 
         ) {%>
 
@@ -61,7 +61,7 @@
                 
                 <form
 
-                action="/products/<%product._id %>?_method=DELETE"
+                action="/products/<%= product._id %>?_method=DELETE"
                 method="POST">
 
 
