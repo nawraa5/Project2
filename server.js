@@ -19,7 +19,7 @@ const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
 const storeController=require("./routes/store-routers.js");
 const productController=require("./routes/product-routers.js");
-const orderController=require("./routes/orders-routers.js");
+const ordersController=require("./routes/orders-routers.js");
 
 
 // Middleware
@@ -55,12 +55,13 @@ app.use(passUserToView)
 
 
 
+
 // Routes go here
 app.use('/auth',authController)
 app.use('/',indexController)
-app.use('/store',storeController)
-app.use('/product',productController)
-app.use('/order',orderController)
+app.use('/stores',storeController)
+app.use('/products',productController)
+app.use('/orders',ordersController)
 
 
 
