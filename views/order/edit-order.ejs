@@ -3,9 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edit-order</title>
+    <title>Edit Order - MOMENT</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
-    
+     <%- include('./partials/navbar') %>
+     <main>
+        <section class="form-section">
+            <h1>
+                Edit order
+            </h1>
+
+            <form
+            action="/orders/<%= order._id %>?_method=PUT"
+            method="POST"
+            class="form"
+            >
+
+
+            <label for="status">
+                Order Status
+            </label>
+
+            <select
+            id="status"
+            name="status"
+            required
+            >
+
+            <option
+            value="Pending"
+            <%= order.status === "Pending" 
+            ?"selected"
+            :""%>
+            >
+            Pending
+        </option>
+
+        <option 
+        value="Confirmed"
+        <%= order.status === "Confirmed" 
+        ?"selected"
+        :""%>
+        >
+        Confirmed
+    </option>
+
+
+    <option
+    value="Delivered"
+    <%= order.status === "Delivered" 
+    ?"selected"
+    :""%>
+    >
+    Delivered
+</option>
+
+     </select>
+
+     <button
+     type="submit"
+     class="btn">
+    Update Order
+    </button>
+
+
+
+        </form>
+        </section>
+     </main>
+
+
+     <%- include("partials/footer") %>
 </body>
 </html>
