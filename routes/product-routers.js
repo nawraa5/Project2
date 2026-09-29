@@ -14,7 +14,7 @@ router.post("/",isSignedIn, async (req, res) => {
        image:req.body.image,
        store:req.body.store
     });
-    res.redirect("/products");
+    res.redirect("/product");
 });
 
 //read all products
@@ -22,7 +22,7 @@ router.post("/",isSignedIn, async (req, res) => {
 router.get("/",async(req,res)=>{
     const products=await Product.find().populate("store");
 
-    res.render("products.ejs",{
+    res.render("product/product.ejs",{
         products
     });
 });
@@ -38,7 +38,7 @@ router.get('/:productId', async (req, res) => {
         return res.send("Product not found")
        }
 
-       res.render("product-details.ejs",{
+       res.render("product/product-details.ejs",{
         product:foundProduct
        });
     
@@ -47,16 +47,14 @@ router.get('/:productId', async (req, res) => {
 //edit product
 
 router.get('/:productId/edit',isSignedIn, async (req, res) => {
-    const foundProduct = await Product.findById(req.params.productId
-       
-    );
+    const foundProduct = await Product.findById(req.params.productId);
 
 
     if (!foundProduct) {
         return res.send('Product not found');
     }
 
-    res.render("edit-product.ejs",{
+    res.render("product/edit-product.ejs",{
         product:foundProduct
     });
 
@@ -82,7 +80,7 @@ router.put('/:productId',isSignedIn, async (req, res) => {
        
     });
 
-    res.redirect('/products')
+    res.redirect('/product')
 });
 
 
@@ -98,7 +96,7 @@ router.delete("/:productId",isSignedIn,async(req,res)=>{
 
     await Product.findByIdAndDelete(req.params.productId);
        
-    res.redirect("/products");
+    res.redirect("/product");
     });
 
 module.exports = router;

@@ -13,7 +13,7 @@ router.post("/",isSignedIn ,async (req, res) => {
         category: req.body.category,
         owner: req.session.user._id
     });
-    res.redirect("/stores")
+    res.redirect("/store")
 });
 
 // read all stores
@@ -23,7 +23,8 @@ router.get('/', async (req, res) => {
         isDeleted: false 
 
     });
-    res.render('stores', { stores});
+    res.render('store/stores.ejs', {
+         stores});
 });
 
 
@@ -40,7 +41,7 @@ router.get('/:storeId', async (req, res) => {
         return res.send('Store not found');
     }
 
-    res.render("store-details.ejs", {
+    res.render("store/store-details.ejs", {
         store:foundStore
     });
 });
@@ -57,7 +58,7 @@ router.get('/:storeId/edit',isSignedIn, async (req, res) => {
         return res.send('Store not found');
     }
 
-    res.render("edit-store",{
+    res.render("store/edit-store.ejs",{
         store:foundStore
     });
 
@@ -81,7 +82,7 @@ router.put('/:storeId',isSignedIn, async (req, res) => {
        
     });
 
-    res.redirect('/stores')
+    res.redirect('/store')
 });
 
 
@@ -99,7 +100,7 @@ router.delete("/:storeId",isSignedIn,async(req,res)=>{
         isDeleted:true
     });
 
-    res.redirect("store/stores")
+    res.redirect("/store")
 
 
 });
