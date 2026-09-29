@@ -3,9 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>orders</title>
+    <title>Orders - MOMENT</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
-    
+     <%- include('./partials/navbar') %>
+
+     <main>
+        <section class="page-header">
+            <h1>Orders</h1>
+
+            <p>
+              View and manage your orders.
+            </p>
+        </section>
+
+
+        <section class="order-container">
+            <% if(orders && orders.length >0) {%>
+                <% orders.forEach(order => {%>
+                    <div class="order-card">
+                        <h2>
+                            Order #<%= order._id  %>
+                        </h2>
+
+                        <%if(order.customer){%>
+                            <p>
+                                Customer:
+                                <%= order.customer.username %>
+                            </p>
+                            <% } %>
+
+                            <p>
+                                Total:
+                                <%= order.totalPrice %> BD
+                            </p>
+
+                            <p>
+                                Status:
+                                <%= order.status %>
+                            </p>
+
+
+                            <a
+                            href="/orders/<%= order._id %>"
+                            class="btn">
+                            View Order
+                        
+                        </a>
+                    </div>
+
+                    <% }) %>
+
+                    <% } else{ %>
+
+                        <p class="empty-message">
+                            You do not have products yet .
+                        </p>
+                        <% } %>
+
+
+
+        </section>
+
+
+
+     </main>
 </body>
 </html>
