@@ -14,7 +14,7 @@ router.post("/",isSignedIn,async(req,res)=>{
         status:"Pending"
 
     })
-    res.redirect("/orders")
+    res.redirect("/order")
 })
 
 
@@ -25,7 +25,7 @@ router.get("/",async(req,res)=>{
     .populate("customer")
     .populate("products");
 
-    res.render("orders.ejs",{
+    res.render("order/orders.ejs",{
         orders
     });
 });
@@ -45,8 +45,8 @@ router.get('/:orderId', async (req, res) => {
         return res.send("Order not found")
        }
 
-       res.render("order-details.ejs",{
-        order:foundProduct
+       res.render("order/order-details.ejs",{
+        order:foundOrder
        });
     
 });
@@ -55,14 +55,14 @@ router.get('/:orderId', async (req, res) => {
 //edit order
 
 router.get('/:orderId/edit',isSignedIn, async (req, res) => {
-    const foundOeder = await Order.findById(req.params.orderId);
+    const foundOrder = await Order.findById(req.params.orderId);
 
-    if (!foundOeder) {
+    if (!foundOrder) {
         return res.send('Order not found');
     }
 
-    res.render("edit-Order.ejs",{
-        order:foundOeder
+    res.render("order/edit-order.ejs",{
+        order:foundOrder
     });
 
 });
@@ -83,22 +83,22 @@ router.put('/:orderId',isSignedIn, async (req, res) => {
        
     });
 
-    res.redirect('/orders')
+    res.redirect('/order')
 });
 
 
 // delete order 
 
 router.delete("/:orderId",isSignedIn,async(req,res)=>{
-    const foundOeder=await Order.findById(req.params.orderId);
+    const foundOrder=await Order.findById(req.params.orderId);
 
-    if(!foundOeder){
+    if(!foundOrder){
         return res.send("order not found");
     }
 
     await Order.findByIdAndDelete(req.params.orderId);
        
-    res.redirect("/orders");
+    res.redirect("/order");
     });
 
 module.exports = router;
