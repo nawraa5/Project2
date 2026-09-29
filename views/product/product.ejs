@@ -4,8 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>product</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
-    
+    <%- include('./partials/navbar') %>
+    <main>
+        <section class="page-header">
+            <h1>Products</h1>
+            <p>
+                Explore flowers and cakes available on MOMENT.
+            </p>
+        </section>
+
+        <section class="product-container">
+            <% if(product && product.length > 0)  {%>
+                <% product.forEach(product => { %>
+                    <div class="product-card">
+                        <img
+                        src="/images/<%=product.image %>"
+                        alt="<%= product.name %>">
+
+                        <div class="product-card-content">
+                            <h2>
+                                <%= product.name %>
+                            </h2>
+
+                            <p>
+                                <%= product.description %>
+                            </p>
+
+
+                            <p class="price">
+                                <%= product.price %> BD
+                            </p>
+
+
+                            <% if(product.store) {%>
+                                <p>
+                                    Store: <%= product.store.name %>
+                                </p>
+
+                                <% } %>
+
+                                <a
+                                href="/products/<%= product._id %>"
+                                class="btn">
+                            View Product
+                        </a>
+
+                        </div>
+                    </div>
+                    <% }) %>
+
+                    <% }else{ %>
+
+                        <p class="empty-message">
+                            No products available .
+                        </p>
+
+                        <% } %>
+
+
+                  
+        </section>
+    </main>
+    <%- include("partials/footer")%>
 </body>
 </html>
