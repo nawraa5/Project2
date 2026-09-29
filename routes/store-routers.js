@@ -3,6 +3,9 @@ const Store= require('../models/store');
 const isSignedIn = require('../middleware/is-signed-in');
 
 
+
+
+
 // crate store
 
 router.post("/",isSignedIn ,async (req, res) => {
@@ -14,7 +17,35 @@ router.post("/",isSignedIn ,async (req, res) => {
         owner: req.session.user._id
     });
     res.redirect("/store")
+
 });
+
+
+//cakes stores
+router.get('/cakes', async(req,res)=>{
+    const stores= await Store.find({
+        category:"cakes",
+        isDeleted:false
+    });
+    res.render("cakes.ejs",{
+        stores
+});
+});
+
+
+
+
+// flowers store
+router.get('/flowers', async(req,res)=>{
+    const stores= await Store.find({
+        category:"flowers",
+        isDeleted:false
+    });
+    res.render("flowers.ejs",{
+        stores
+});
+});
+
 
 // read all stores
 
