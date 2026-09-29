@@ -3,9 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>order-details</title>
+    <title>Order Details - MOMENT</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
+    <%- include('./partials/navbar') %>
+<main>
+    <section class="order-details">
+        <h1>
+        Order Details
+    </h1>
+
+    <p>
+        Order ID:
+        <%= order._id %>
+    </p>
+    <% if(order.customer) {%>
+        <p>
+        Customer:
+        <%= order.customer.username %>
+        </p>
+        <% } %>
+
+        <p>
+            Status
+            <%= order.status %>
+        </p>
+
+        <h2>
+            Products
+        </h2>
+
+
+        <% if(order.products && order.products.length >0) {%>
+            <div class="products-container">
+            <% order.products.forEach(product =>{ %>
+                <div class="product-card">
+
+                    <img src="/images/<%= product.image %>"
+                    alt="<%= product.name %>"
+                    >
+
+                    <div class="product-card-content">
+
+                        <h3>
+                            <%= product.name %>
+                        </h3>
+
+                        <p>
+                            <%= product.description %>
+                        </p>
+
+                        <p class="price">
+                            <%= product.price %>BD
+                        </p>
+                    </div>
+
+
+                </div>
+
+                <% }) %>
+            </div>
+            <% }else {%>
+                <p>
+                    No products in the order
+                </p>
+
+                <% } %>
+
+
+                <div class="order-total">
+                    <h2>
+                        Total:
+                        <%= order.totalPrice %>BD
+                    </h2>
+                </div>
+
+                <div class="action-buttons">
+                    <a
+                    href="/orders/<%= order._id %>/edit"
+                    class="btn">
+                
+                    Edit Order
+                </a>
+
+
+                <form 
+                action="/orders/<%= order._id %>?_method=DELETE"
+                method="POST"
+                >
+
+                <button 
+                type="submit"
+                class="delete-btn">
+
+
+                Delete Order
+            
+            </button>
+            
+            
+            
+            </form>
+                </div>
+
+    </section>
     
+</main>
 </body>
 </html>

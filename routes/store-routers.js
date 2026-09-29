@@ -99,7 +99,7 @@ router.delete("/:storeId",isSignedIn,async(req,res)=>{
         isDeleted:true
     });
 
-    res.redirect("/stores")
+    res.redirect("store/stores")
 
 
 });
