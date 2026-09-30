@@ -11,6 +11,12 @@ const isSignedIn = require('../middleware/is-signed-in');
 
 
 router.post("/",isSignedIn ,async (req, res) => {
+    
+    if(req.session.user.role!== "owner"){
+        return res.status(403).send("Only owners can create stores")
+    }
+
+
     const createdStore = await Store.create({
         name: req.body.name,
         description: req.body.description,
@@ -23,6 +29,10 @@ router.post("/",isSignedIn ,async (req, res) => {
 });
 
 router.get("/new",isSignedIn,async(req,res)=>{
+
+    if(req.session.user.role!== "owner"){
+        return res.status(403).send("Only owners can create stores")
+    }
     res.render("store/add-store.ejs")
 });
 

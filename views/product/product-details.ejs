@@ -46,11 +46,10 @@
                     <div class="action-buttons">
                     
                      <% if(
-            typeof currentUser !=="undefined" &&
-            currentUser && 
+            user &&
             product.store&&
             product.store.owner&&
-            currentUser._id.toString()=== product.store.owner.toString()
+           user._id.toString()=== product.store.owner.toString()
 
         ) {%>
 

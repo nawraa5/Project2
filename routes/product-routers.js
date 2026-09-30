@@ -6,6 +6,11 @@ const isSignedIn = require('../middleware/is-signed-in')
 
 //add product 
 router.get("/new",isSignedIn,async(req,res)=>{
+    if(req.session.user.role!== "owner"){
+     return res.status(403).send("Only owners can create stores")
+    }
+
+    
     const stores=await Store.find({
         owner:req.session.user._id,
         isDeleted:false
