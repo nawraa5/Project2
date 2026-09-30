@@ -16,9 +16,9 @@
             <img
             src="/images/<%=store.image %>"
             alt="<%= store.name %>"
-            class="store-detials-image">
+            class="store-details-image">
 
-            <div class="store-detials-content">
+            <div class="store-details-content">
                 <span class="category">
                     <%= store.category %>
                 </span>
@@ -79,15 +79,15 @@
                             </p>
 
                             <% } %>
-                </div>
+               
 
 
         </section>
 
         <% if(
-            typeof currentUser !=="undefined" &&
-            currentUser && store.owner&&
-            currentUser._id.toString()=== store.owner._id.toString()
+            user &&
+            store.owner&&
+           user._id.toString()=== store.owner._id.toString()
 
         ){%>
 
