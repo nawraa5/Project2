@@ -9,6 +9,7 @@ const isSignedIn = require('../middleware/is-signed-in')
 //add order 
 
 router.get("/new",isSignedIn,async(req,res)=>{
+    
     const products=await Product.find();
     res.render("order/add-order.ejs",{
         products
@@ -30,8 +31,10 @@ router.post("/",isSignedIn,async(req,res)=>{
 
 //read all order 
 
-router.get("/",async(req,res)=>{
-    const orders=await Order.find()
+router.get("/",isSignedIn,async(req,res)=>{
+    const orders=await Order.find({
+        customer:req.session.user._id
+    })
     .populate("customer")
     .populate("products");
 
@@ -45,7 +48,7 @@ router.get("/",async(req,res)=>{
 //read one order 
 
 
-router.get('/:orderId', async (req, res) => {
+router.get('/:orderId',isSignedIn, async (req, res) => {
     const foundOrder= await Order.findById(
        req.params.orderId)
        .populate("customer")
@@ -54,6 +57,10 @@ router.get('/:orderId', async (req, res) => {
        if(!foundOrder){
         return res.send("Order not found")
        }
+
+       if(foundOrder.customer._id.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to view this order");
+    }
 
        res.render("order/order-details.ejs",{
         order:foundOrder
@@ -71,6 +78,11 @@ router.get('/:orderId/edit',isSignedIn, async (req, res) => {
         return res.send('Order not found');
     }
 
+    if(foundOrder.customer.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to edit this order");
+
+    }
+
     res.render("order/edit-order.ejs",{
         order:foundOrder
     });
@@ -80,6 +92,19 @@ router.get('/:orderId/edit',isSignedIn, async (req, res) => {
 //update order
 
 router.put('/:orderId',isSignedIn, async (req, res) => {
+
+    const foundOrder = await Order.findById(req.params.orderId);
+
+    if (!foundOrder) {
+        return res.send('Order not found');
+    }
+
+    if(foundOrder.customer.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to edit this order");
+
+    }
+
+
     await Order.findByIdAndUpdate(
         req.params.orderId,
         {
@@ -97,6 +122,11 @@ router.delete("/:orderId",isSignedIn,async(req,res)=>{
 
     if(!foundOrder){
         return res.send("order not found");
+    }
+
+    if(foundOrder.customer.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to delete this order");
+
     }
 
     await Order.findByIdAndDelete(req.params.orderId);

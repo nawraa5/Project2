@@ -104,6 +104,10 @@ router.get('/:storeId/edit',isSignedIn, async (req, res) => {
         return res.send('Store not found');
     }
 
+    if(foundStore.owner.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to edit this store");
+    }
+
     res.render("store/edit-store.ejs",{
         store:foundStore
     });
@@ -113,6 +117,17 @@ router.get('/:storeId/edit',isSignedIn, async (req, res) => {
 //update store
 
 router.put('/:storeId',isSignedIn, async (req, res) => {
+    const foundStore= await Store.findById(req.params.storeId);
+    
+    if(!foundStore){
+        return res.send("Store not found")
+    }
+
+    if(foundStore.owner.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to edit this store");
+    }
+    
+
     const {
          name, 
          description,
@@ -141,6 +156,12 @@ router.delete("/:storeId",isSignedIn,async(req,res)=>{
     if(!foundStore){
         return res.send("Store not found");
     }
+
+    if(foundStore.owner.toString()!== req.session.user._id.toString()){
+        return res.status(403).send("You are not allowed to delete this store");
+    }
+
+    
 
     await Store.findByIdAndUpdate(req.params.storeId,{
         isDeleted:true

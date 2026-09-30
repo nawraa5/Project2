@@ -62,6 +62,27 @@
                             View Order
                         
                         </a>
+
+                        <a
+                            href="/orders/<%= order._id %>/edit"
+                            class="btn">
+                            Edit Order
+                        
+                        </a>
+
+                        <form
+                        action="/orders/<%= order._id%>?_method=DELETE"
+                        method="POST"
+                        style="display: inline;"
+                        >
+
+                        <button type="submit" class="btn">
+                            Delete Order
+
+                        </button>
+                    </form>
+
+                        
                     </div>
 
                     <% }) %>

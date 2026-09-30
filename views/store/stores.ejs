@@ -53,7 +53,7 @@
                         </a>
 
 
-                        <%if(user&& user.role === "owner"){%>
+                        <%if(user&& user.role === "owner" && store.owner.toString() === user._id.toString()){%>
                             
                            <a href="/stores/<%=store._id%>/edit"
                             class="btn">

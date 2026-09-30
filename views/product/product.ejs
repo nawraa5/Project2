@@ -61,7 +61,7 @@
                             View Product
                         </a>
 
-                          <%if(user&& user.role === "owner"){%>
+                          <%if(user&& user.role === "owner"&& product.store&&product.store.owner.toString() === user._id.toString() ){%>
                             
                            <a href="/products/<%=product._id%>/edit"
                             class="btn">
