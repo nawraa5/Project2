@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Store - MOMENT</title>
+    <title>Add Store - MOMENT</title>
     <link rel="stylesheet" href="/css/style.css">
                 <link rel="icon" type="image/jpeg" href="/images/MOMENT-logo.jpg">
 
 
 </head>
-
 <body>
-     <%- include("../partials/navbar") %>
+    <%- include("../partials/navbar") %>
 
-     <main>
+    <main>
         <section class="form-section">
-            <h1>Edit store</h1>
+            <h1>Add Store</h1>
 
-            <form 
-            action="/stores/<%=store._id%>?_method=PUT"
-            method="POST"
-            class="form">
+            <form action="/stores"method="POST" class="form">
 
             <label for="name">
                 Store Name
@@ -30,7 +26,6 @@
             type="text"
             id="name"
             name="name"
-            value="<%= store.name %>"
             required
             >
 
@@ -43,7 +38,7 @@
         id="description"
         name="description"
         required>
-        <%= store.description%>
+       
     </textarea>
 
     <label for="image">
@@ -55,7 +50,7 @@
     type="text"
     id="image"
     name="image"
-    value="<%=store.image %>"
+    placeholder="example.jpg"
     required
     >
 
@@ -72,17 +67,13 @@
    
 
     <option
-    value="flowers"
-    <%= store.category === "flowers" ? "selected":"" %>
-    >
+    value="flowers">
     Flowers
 </option>
 
 
 <option
-    value="cakes"
-    <%= store.category === "cakes" ? "selected":"" %>
-    >
+    value="cakes">
     Cakes
 </option>
     </select>
@@ -91,14 +82,16 @@
     type="submit"
     class="btn"
     >
-    Update Store
+    Add Store
 </button>
-            </form>
+
+         </form>
         </section>
-     </main>
+    </main>
+
+    <%- include("../partials/footer") %>
 
 
-     <%- include("../partials/footer") %>
-    
+
 </body>
 </html>

@@ -1,9 +1,19 @@
 const router = require("express").Router()
 const Order = require('../models/order')
+const Product = require('../models/product')
 const isSignedIn = require('../middleware/is-signed-in')
 
 
 
+
+//add order 
+
+router.get("/new",isSignedIn,async(req,res)=>{
+    const products=await Product.find();
+    res.render("order/add-order.ejs",{
+        products
+    })
+})
 //create order 
 
 router.post("/",isSignedIn,async(req,res)=>{
@@ -14,7 +24,7 @@ router.post("/",isSignedIn,async(req,res)=>{
         status:"Pending"
 
     })
-    res.redirect("/order")
+    res.redirect("/orders")
 })
 
 
@@ -67,23 +77,16 @@ router.get('/:orderId/edit',isSignedIn, async (req, res) => {
 
 });
 
+//update order
+
 router.put('/:orderId',isSignedIn, async (req, res) => {
-    const {
-         customer, 
-         products,
-         totalPrice,
-          status
-             } = req.body;
-
-   await Order.findByIdAndUpdate(req.params.orderId, {
-        customer, 
-         products,
-         totalPrice,
-          status
-       
-    });
-
-    res.redirect('/order')
+    await Order.findByIdAndUpdate(
+        req.params.orderId,
+        {
+            status:req.body.status
+        }
+    );
+    res.redirect('/orders')
 });
 
 
@@ -98,7 +101,7 @@ router.delete("/:orderId",isSignedIn,async(req,res)=>{
 
     await Order.findByIdAndDelete(req.params.orderId);
        
-    res.redirect("/order");
+    res.redirect("/orders");
     });
 
 module.exports = router;

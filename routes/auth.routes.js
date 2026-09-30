@@ -19,6 +19,10 @@ router.post("/sign-up", async (req, res) => {
     return res.send("Password and Confirm Password must match");
   }
 
+  if(req.body.password.length <7){
+    return res.send("Password must be more than 6 characters")
+  }
+
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   req.body.password = hashedPassword;
 
@@ -58,7 +62,8 @@ router.post("/sign-in", async (req, res) => {
   // If there is other data you want to save to `req.session.user`, do so here!
   req.session.user = {
     username: userInDatabase.username,
-    _id: userInDatabase._id
+    _id: userInDatabase._id,
+    role:userInDatabase.role
   };
 
   res.redirect("/");

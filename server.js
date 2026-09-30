@@ -44,12 +44,10 @@ app.use(
     }
   })
 );
+
+
+
 app.use(passUserToView)
-
-
-
-
-
 
 
 
@@ -63,6 +61,9 @@ app.use('/stores',storeController)
 app.use('/products',productController)
 app.use('/orders',ordersController)
 
+app.use((req,res)=>{
+  res.status(404).render("404.ejs")
+});
 
 
 

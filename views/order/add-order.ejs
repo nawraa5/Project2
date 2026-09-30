@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Order</title>
+    <link rel="stylesheet" href="/css/style.css">
+                <link rel="icon" type="image/jpeg" href="/images/MOMENT-logo.jpg">
+
+
+</head>
+<body>
+     <%- include('../partials/navbar') %>
+     <main>
+        <section class="form-section">
+            <h1>
+                Add Order
+            </h1>
+
+            <form
+            action="/orders"
+            method="POST"
+            class="form"
+            >
+
+            <label for="products">
+                Product
+            </label>
+
+
+            <select id="products" name="products" required>
+
+                <% products.forEach(product =>{%>
+                    <option value="<%= product._id %>">
+                        <%= product.name %> - <%= product.price %> BD
+                    </option>
+
+                    <% }) %>
+            </select>
+
+
+            <label for="totalPrice">
+                Total price
+            </label>
+
+            <input
+            type="number"
+            id="totalPrice"
+            name="totalPrice"
+            step="0.01"
+            required>
+
+
+            
+
+     <button
+     type="submit"
+     class="btn">
+    Add Order
+    </button>
+
+        </form>
+        </section>
+     </main>
+
+
+     <%- include("../partials/footer") %>
+</body>
+</html>

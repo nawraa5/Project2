@@ -1,9 +1,18 @@
 const router = require("express").Router()
 const Product = require('../models/product')
+const Store=require('../models/store')
 const isSignedIn = require('../middleware/is-signed-in')
 
 
-
+//add product 
+router.get("/new",isSignedIn,async(req,res)=>{
+    const stores=await Store.find({
+        isDeleted:false
+    });
+    res.render("product/add-product.ejs",{
+        stores
+    });
+});
 //create Product
 
 router.post("/",isSignedIn, async (req, res) => {
@@ -14,10 +23,12 @@ router.post("/",isSignedIn, async (req, res) => {
        image:req.body.image,
        store:req.body.store
     });
-    res.redirect("/product");
+    res.redirect("/products");
 });
 
 //read all products
+
+
 
 router.get("/",async(req,res)=>{
     const products=await Product.find().populate("store");
@@ -34,6 +45,7 @@ router.get('/:productId', async (req, res) => {
     const foundProduct= await Product.findById(
        req.params.productId).populate("store")
 
+
        if(!foundProduct){
         return res.send("Product not found")
        }
@@ -46,7 +58,7 @@ router.get('/:productId', async (req, res) => {
 
 //edit product
 
-router.get('/:productId/edit',isSignedIn, async (req, res) => {
+router.get("/:productId/edit",isSignedIn, async (req, res) => {
     const foundProduct = await Product.findById(req.params.productId);
 
 
@@ -54,8 +66,13 @@ router.get('/:productId/edit',isSignedIn, async (req, res) => {
         return res.send('Product not found');
     }
 
+    const stores=await Store.find({
+        isDeleted:false
+    });
+
     res.render("product/edit-product.ejs",{
-        product:foundProduct
+        product:foundProduct,
+        stores
     });
 
 });
@@ -77,10 +94,12 @@ router.put('/:productId',isSignedIn, async (req, res) => {
         price,
         image,
         store
+   }
+);
        
-    });
+    
 
-    res.redirect('/product')
+    res.redirect('/products')
 });
 
 
@@ -96,7 +115,7 @@ router.delete("/:productId",isSignedIn,async(req,res)=>{
 
     await Product.findByIdAndDelete(req.params.productId);
        
-    res.redirect("/product");
+    res.redirect("/products");
     });
 
 module.exports = router;

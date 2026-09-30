@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%=store.name %> - MOMENT</title>
     <link rel="stylesheet" href="/css/style.css">
+                <link rel="icon" type="image/jpeg" href="/images/MOMENT-logo.jpg">
+
     </head>
 <body>
-    <%- include("partials/navbar") %>
+    <%- include("../partials/navbar") %>
 
     <main>
         <section class="store-details">
@@ -61,7 +63,7 @@
                                 </p>
 
                                 <a
-                                href="/products<%= product._id %>"
+                                href="/products/<%= product._id %>"
                                 class="btn">
                             View Product</a>
                             </div>
@@ -84,8 +86,8 @@
 
         <% if(
             typeof currentUser !=="undefined" &&
-            curentUser && store.owner&&
-            curentUser._id.toString()=== store.owner._id.toString()
+            currentUser && store.owner&&
+            currentUser._id.toString()=== store.owner._id.toString()
 
         ){%>
 
@@ -111,6 +113,6 @@
             <% } %>
     </main>
 
-    <%- include("partials/footer")%>
+    <%- include("../partials/footer")%>
 </body>
 </html>

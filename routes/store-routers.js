@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Store= require('../models/store');
+const Product=require('../models/product')
 const isSignedIn = require('../middleware/is-signed-in');
 
 
@@ -7,6 +8,7 @@ const isSignedIn = require('../middleware/is-signed-in');
 
 
 // crate store
+
 
 router.post("/",isSignedIn ,async (req, res) => {
     const createdStore = await Store.create({
@@ -16,9 +18,14 @@ router.post("/",isSignedIn ,async (req, res) => {
         category: req.body.category,
         owner: req.session.user._id
     });
-    res.redirect("/store")
+    res.redirect("/stores")
 
 });
+
+router.get("/new",isSignedIn,async(req,res)=>{
+    res.render("store/add-store.ejs")
+});
+
 
 
 //cakes stores
@@ -55,7 +62,8 @@ router.get('/', async (req, res) => {
 
     });
     res.render('store/stores.ejs', {
-         stores});
+         stores
+        });
 });
 
 
@@ -72,10 +80,17 @@ router.get('/:storeId', async (req, res) => {
         return res.send('Store not found');
     }
 
+    const products = await Product.find({
+        store:req.params.storeId
+    });
+
     res.render("store/store-details.ejs", {
-        store:foundStore
+        store:foundStore,
+        products
     });
 });
+
+
     
 //edit store
 router.get('/:storeId/edit',isSignedIn, async (req, res) => {
@@ -109,11 +124,11 @@ router.put('/:storeId',isSignedIn, async (req, res) => {
         name,
         description,
         image,
-        category,
+        category
        
     });
 
-    res.redirect('/store')
+    res.redirect('/stores')
 });
 
 
@@ -131,7 +146,7 @@ router.delete("/:storeId",isSignedIn,async(req,res)=>{
         isDeleted:true
     });
 
-    res.redirect("/store")
+    res.redirect("/stores")
 
 
 });

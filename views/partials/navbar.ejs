@@ -1,25 +1,24 @@
 <nav class="navbar">
   <div class="navbar-container">
-    <a href="/" class="logo">Moment</a>
+    <a href="/" class="logo">
+      <img src="/images/MOMENT-logo.jpg" alt="MOMENT">
+    </a>
 
     <div class="nav-link">
-      <a href="/">Home</a>
+      <a href="stores">All of the Stores</a>
       <a href="/stores/flowers">Flowers</a>
       <a href="/stores/cakes">Cakes</a>
       <a href="/products">Products</a>
 
 
 
-      <% if (typeof curentUser !== 'undefined'&& curentUser) { %>
-        <%if(curentUser.role === "owner"){ %>
+      <% if (user) { %>
+        
         <a href="/orders">Orders</a>
-        <% } %>
+       
 
-        <form action="/auth/logout" method="POST" class="logout-form">
-          <button type="submit">Logout</button>
-          </form>
-
-
+        <a href="/auth/sign-out">Logout</a>
+        
           <%} else{ %>
     <a href="/auth/sign-up">Sign up</a>
     <a href="/auth/sign-in">Login</a>
